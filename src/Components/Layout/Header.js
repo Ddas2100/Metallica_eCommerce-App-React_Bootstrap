@@ -28,7 +28,9 @@ const Header = () => {
                         style={{ border: '1px solid #56CCF2' }}> Get Our Latest Album </Button>
                         
                         <Button className='fs-4 d-flex rounded-circle p-3 mx-auto bg-transparent'
-                        style={{ border: '2px solid #56CCF2', color: '#56CCF2' }}> <BsFillPlayFill size={35} /> </Button>
+                        style={{ border: '2px solid #56CCF2', color: '#56CCF2' }}> 
+                            <BsFillPlayFill size={35} /> 
+                        </Button>
                     </>  
                 )}
             </div>

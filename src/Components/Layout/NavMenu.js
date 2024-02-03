@@ -3,8 +3,16 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from 'react-router-dom';
+import OffCanvasCart from './OffCanvasCart';
+import CartContext from '../Store/CartContext';
+import { toast } from 'react-toastify';
+import { Suspense, useContext } from 'react';
 
 const NavMenu = () => {
+
+    const cartCtx= useContext(CartContext);
+
+    const itemsInCart= cartCtx.items.reduce((curNum, item) => curNum + item.qty, 0);
 
     return (
         <Navbar fixed='top' expand='lg' className='bg-dark'>
@@ -18,6 +26,20 @@ const NavMenu = () => {
                         <NavLink to= '/about' className='text-decoration-none text-white d-flex align-items-center'>ABOUT</NavLink>
                         <NavLink to= '/contact' className='text-decoration-none text-white d-flex align-items-center'>CONTACT</NavLink>
                     </Nav>
+                    <Suspense fallback={<p>Loading...</p>}>
+                        <OffCanvasCart
+                            placement={'end'}
+                            name={'My Cart'}
+                            scroll={false}
+                            btn={{
+                              variant: 'outline-primary',
+                              size: 'md',
+                              text: 'My Cart',
+                              className: 'position-relative d-flex gap-1 align-items-center',
+                            }}
+                            btnSpan={{itemsInCart}}
+                        />
+                    </Suspense>
                 </Navbar.Collapse>
             </Container>
         </Navbar>
