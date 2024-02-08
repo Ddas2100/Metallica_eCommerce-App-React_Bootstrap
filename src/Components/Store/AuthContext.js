@@ -31,7 +31,7 @@ export const AuthProvider= (props) => {
                 }, 500)
             }
         }
-    }, []);
+    }, [timeAtTokenCreated, timer]);
 
     const loginHandler = (token, userEmail) => {
         localStorage.setItem('token', token);

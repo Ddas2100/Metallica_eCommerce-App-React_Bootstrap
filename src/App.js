@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import { Route, Routes } from 'react-router-dom';
-import { Suspense } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { Suspense, useContext } from 'react';
 import RootLayout from './Components/Pages/RootLayout';
 import Home from './Components/Pages/Home';
 import About from './Components/Pages/About';
@@ -9,8 +9,18 @@ import Shop from './Components/Pages/Shop';
 import Contact from './Components/Pages/Contact';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AuthContext from './Components/Store/AuthContext';
+import Auth from './Components/Pages/Auth';
 
 function App() {
+  const authCtx= useContext(AuthContext);
+
+  const ProtectedRoute = ({ element }) => 
+    !authCtx.isLoggedIn ? <Navigate to='/login' /> : element;
+
+  const LoggedInRoute = ({ element }) =>
+    authCtx.isLoggedIn ? <Navigate to='/store' /> : element;
+
   return (
     <>
       <ToastContainer
@@ -37,6 +47,30 @@ function App() {
               <Home />
             </Suspense>
           }/>
+          <Route
+            path='/login'
+            element= {
+              <LoggedInRoute
+                element={
+                  <Suspense fallback={<p>Loading...</p>}>
+                    <Auth />
+                  </Suspense>
+                }
+              />
+            }
+          />
+          <Route
+            path='/register'
+            element= {
+              <LoggedInRoute
+                element={
+                  <Suspense fallback={<p>Loading...</p>}>
+                    <Auth />
+                  </Suspense>
+                }
+              />
+            }
+          />
           <Route path='/about'
             element={
               <Suspense fallback={<p>Loading...</p>}>
@@ -53,9 +87,13 @@ function App() {
           />
           <Route path='/store'
             element={
-              <Suspense fallback={<p>Loading...</p>}>
-                <Shop />
-              </Suspense>
+              <ProtectedRoute
+                element={
+                  <Suspense fallback={<p>Loading...</p>}>
+                    <Shop />
+                  </Suspense>
+                }
+              />  
             }
           />
         </Route>

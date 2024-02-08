@@ -1,5 +1,8 @@
-import { useReducer } from "react";
+import { useContext, useEffect, useReducer } from "react";
 import CartContext from "./CartContext";
+import AuthContext from "./AuthContext";
+import { addToCart, deleteFromCart, getUserCart } from './CartServices';
+import { toast } from "react-toastify";
 
 let initialCartState = {items: [], totalAmount: 0};
 const cartReducer= (state, action) => {
@@ -32,11 +35,50 @@ const cartReducer= (state, action) => {
 };
 
 const CartProvider = (props) => {
+    const authCtx = useContext(AuthContext);
+    let { isLoggedIn, userEmail } = authCtx;
     const [cartState, dispatchCartAction] = useReducer(cartReducer, initialCartState);
+
+    useEffect(() => {
+        isLoggedIn && getUserCart(userEmail).then(({data}) => {
+            data && dispatchCartAction({ type: 'GET_CART', cartItems: data });
+        }).catch((err) => console.log(err.message));
+
+        dispatchCartAction({ type: 'GET_CART', cartItems: [] });
+    }, [isLoggedIn, userEmail]);
+
+    const addToCartHandler = (item) => {addToCart(authCtx.userEmail, item)
+        .then(({ data }) => {
+            dispatchCartAction({ type: 'ADD_TO_CART', item: data });
+            toast.success('Item added to the cart!', { position: 'bottom-right' });
+        }).catch((err) => console.log(err.message));
+    };
+    
+    const removeFromCart = (id, _id) => {deleteFromCart(authCtx.userEmail, _id)
+        .then(() => {
+            dispatchCartAction({ type: 'REMOVE_FROM_CART', id: id });
+            toast.success('item removed from cart!', { position: 'bottom-right' });
+        }).catch((err) => console.log(err.message));
+    };
+    
+    const order = (items) => {
+        try {
+            items.forEach(async (item) => {
+                await deleteFromCart(authCtx.userEmail, item._id);
+            });
+            dispatchCartAction({ type: 'ORDER' });
+            toast.success('Order placed. Enjoy!', { position: 'top-center' });
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const cartContext = {
         items: cartState.items,
         totalAmount: cartState.totalAmount,
+        addItem: addToCartHandler,
+        removeItem: removeFromCart, 
+        order: order,
     };
 
     return (
