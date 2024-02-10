@@ -11,6 +11,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AuthContext from './Components/Store/AuthContext';
 import Auth from './Components/Pages/Auth';
+import Error from './Components/Pages/ErrorPage';
 
 function App() {
   const authCtx= useContext(AuthContext);
@@ -94,6 +95,13 @@ function App() {
                   </Suspense>
                 }
               />  
+            }
+          />
+          <Route path='*'
+            element={
+              <Suspense fallback={<p>Loading...</p>}>
+                <Error />
+              </Suspense>
             }
           />
         </Route>

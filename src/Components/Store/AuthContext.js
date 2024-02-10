@@ -18,7 +18,7 @@ export const AuthProvider= (props) => {
     const [userEmail, setUserEmail]= useState(initialUserEmmail);
 
     const userIsLoggedIn= !!token;
-    const timer= 30*60*1000;
+    const timer= 15*60*1000;
 
     useEffect(() => {
         if (Object.keys(localStorage).indexOf('expiresIn') !== -1) {

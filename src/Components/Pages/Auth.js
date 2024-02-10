@@ -67,8 +67,8 @@ const Auth = () => {
         // });
         setIsLoading(true);
         try {
-            const { data } = await fetch (url, {
-                method: 'POST',
+            const { data } = await axios.post (url, {
+                // method: 'POST',
                 ...formData,
                 returnSecureToken: true,
             });
