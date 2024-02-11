@@ -2,16 +2,17 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { Suspense, useContext } from 'react';
-import RootLayout from './Components/Pages/RootLayout';
-import Home from './Components/Pages/Home';
-import About from './Components/Pages/About';
-import Shop from './Components/Pages/Shop';
-import Contact from './Components/Pages/Contact';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AuthContext from './Components/Store/AuthContext';
 import Auth from './Components/Pages/Auth';
 import Error from './Components/Pages/ErrorPage';
+import RootLayout from './Components/Pages/RootLayout';
+import Home from './Components/Pages/Home';
+import About from './Components/Pages/About';
+import Shop from './Components/Pages/Shop';
+import Contact from './Components/Pages/Contact';
+import ForgotPassword from './Components/Pages/FogotPassword';
 
 function App() {
   const authCtx= useContext(AuthContext);
@@ -55,6 +56,18 @@ function App() {
                 element={
                   <Suspense fallback={<p>Loading...</p>}>
                     <Auth />
+                  </Suspense>
+                }
+              />
+            }
+          />
+          <Route
+            path='/forgot-password'
+            element= {
+              <LoggedInRoute
+                element={
+                  <Suspense fallback={<p>Loading...</p>}>
+                    <ForgotPassword />
                   </Suspense>
                 }
               />
