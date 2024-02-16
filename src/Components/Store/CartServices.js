@@ -1,53 +1,54 @@
-import axios from "axios";
-
-const baseUrl =
-  'https://crudcrud.com/api/0f4a57c5043a4683a7531f08229a98e4/cart_data'; 
-
-export const getUserCart = async (userEmail) => {
-  return axios.get(`${baseUrl}${userEmail}`);
-};
-
-export const addToCart = async (userEmail, item) => {
-  return axios.post(`${baseUrl}${userEmail}`, item);
-};
-
-export const deleteFromCart = async (userEmail, _id) => {
-  return axios.delete(`${baseUrl}${userEmail}/${_id}`);
-};
+// import axios from "axios";
 
 // const baseUrl =
-//   'https://crudcrud.com/api/a1194cd2015840c584405c91b998616b/cart_data';
+//   'https://crudcrud.com/api/7ede35c4860347efa0324caf2cf6c182/cart_data'; 
 
 // export const getUserCart = async (userEmail) => {
-//   const response = await fetch(`${baseUrl}${userEmail}`);
-//   if (!response.ok) {
-//     throw new Error('Failed to fetch user cart');
-//   }
-//   return response.json(); 
+//   return axios.get(`${baseUrl}${userEmail}`); 
 // };
 
 // export const addToCart = async (userEmail, item) => {
-//   const response = await fetch(`${baseUrl}${userEmail}`, {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify(item),
-//   });
-//   if (!response.ok) {
-//     throw new Error('Failed to add item to cart');
-//   }
-//   return response.json();
+//   return axios.post(`${baseUrl}${userEmail}`, item);
 // };
 
 // export const deleteFromCart = async (userEmail, _id) => {
-//   const response = await fetch(`${baseUrl}${userEmail}/${_id}`, {
-//     method: 'DELETE',
-//   });
-//   if (!response.ok) {
-//     throw new Error('Failed to delete item from cart');
-//   }
+//   return axios.delete(`${baseUrl}${userEmail}/${_id}`);  
 // };
+
+
+const baseUrl =
+  'https://crudcrud.com/api/fcbce6c10b7e4472aca5d80ec671e7b4/cart_data';
+
+export const getUserCart = async (userEmail) => {
+  const response = await fetch(`${baseUrl}${userEmail}`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch user cart');
+  }
+  return response.json(); 
+};
+
+export const addToCart = async (userEmail, item) => {
+  const response = await fetch(`${baseUrl}${userEmail}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(item),
+  });
+  if (!response.ok) {
+    throw new Error('Failed to add item to cart');
+  }
+  return response.json();
+};
+
+export const deleteFromCart = async (userEmail, _id) => {
+  const response = await fetch(`${baseUrl}${userEmail}/${_id}`, {
+    method: 'DELETE',
+  });
+  if (!response.ok) {
+    throw new Error('Failed to delete item from cart');
+  }
+};
 
 
 // let cartData = {};

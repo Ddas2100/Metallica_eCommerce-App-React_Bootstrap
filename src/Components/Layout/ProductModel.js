@@ -11,7 +11,7 @@ const ProductModel= ({product, index}) => {
     }`;
     const cartCtx= useContext(CartContext);
 
-    const addToCartHandler = (prodduct) => {
+    const addToCartHandler = (product) => {
         const { id, title, price, imageUrl } = product;
         const item = { id, title, price, imageUrl, qty: 1 };
 

@@ -22,7 +22,7 @@ export const AuthProvider= (props) => {
 
     useEffect(() => {
         if (Object.keys(localStorage).indexOf('expiresIn') !== -1) {
-            if (Date.now() - timer > timeAtTokenCreated) {
+            if (Date.now() - timeAtTokenCreated > timer) {
                 setTimeout(() => {
                     logoutHandler();
                     toast.error('Current Session has Expired! Login Again', {
@@ -31,7 +31,7 @@ export const AuthProvider= (props) => {
                 }, 500)
             }
         }
-    }, [timeAtTokenCreated, timer]);
+    }, [timer, timeAtTokenCreated]);
 
     const loginHandler = (token, userEmail) => {
         localStorage.setItem('token', token);
@@ -40,7 +40,7 @@ export const AuthProvider= (props) => {
         const newUserEmail = userEmail.replace(/@/g, '').replace(/\./g, '');
         localStorage.setItem('userEmail', newUserEmail);
         setUserEmail(newUserEmail);
-        localStorage.setItem('expiresIn', Date.now());
+        localStorage.setItem('expiresIn', Date.now() + timer);
     };
 
     function logoutHandler() {

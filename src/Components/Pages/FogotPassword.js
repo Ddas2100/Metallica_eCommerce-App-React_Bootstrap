@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import Section from "../UI/Section";
 import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { BsArrowLeft } from 'react-icons/bs';
+import { BsArrowLeft } from 'react-icons/bs'; 
 
 const ForgotPassword = () => {
     const emailInputRef= useRef();

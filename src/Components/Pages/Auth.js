@@ -2,7 +2,7 @@ import { useContext, useState } from "react"
 import AuthContext from "../Store/AuthContext"
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import axios from 'axios';
+// import axios from 'axios';
 import Section from "../UI/Section";
 import { Button, Form } from "react-bootstrap";
 
@@ -33,51 +33,35 @@ const Auth = () => {
 
         let url;
         if(isLogin) {
-            url= 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCWSthAbSqQAo_CWhp3LmfO7wJnQSacyQU'
+            url= 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDTI30QMAAdSi5oIa1CrqIcwRjXToPJ1kI'
         } else {
-            url= 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCWSthAbSqQAo_CWhp3LmfO7wJnQSacyQU'
+            url= 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDTI30QMAAdSi5oIa1CrqIcwRjXToPJ1kI'
         }
-        // fetch(
-        //     url,
-        //     {
-        //         method: 'POST',
-        //         body: JSON.stringify({
-        //             email: 'email',
-        //             password: 'password',
-        //             returnSecureToken: true,
-        //         }),
-        //         headers:{
-        //             'Content-Type': 'application/json'
-        //         }
-        //     } 
-        // ).then(res => {
-        //     if(res.ok) {
-        //         return res.json();
-        //     } else {
-        //         return res.json().then(data => {
-        //             let errorMessage= 'Authentication Failed';
-        //             throw new Error(errorMessage);
-        //         });
-        //     }
-        // }).then((data) => {
-        //     console.log(data);
-        // })
-        // .catch((err) => {
-        //     alert(err.message)
-        // });
         setIsLoading(true);
         try {
-            const { data } = await axios.post (url, {
-                // method: 'POST',
-                ...formData,
-                returnSecureToken: true,
-            });
+            const response = await fetch (url, {
+                method: 'POST',
+                body: JSON.stringify({
+                    ...formData,
+                    returnSecureToken: true,
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error.message || 'Authentication failed');
+            }
+
             authCtx.login(data.idToken, data.email);
             toast.success(isLogin ? 'Logged in Successfully!' : 'Successfully account created!', { position: 'bottom-right' });
             navigate('/store');
             setFormData({email:'', password:''});
         } catch (error) {
-            let errorMessage = error.response ? error.response.data.error.message : error.Message;
+            let errorMessage = error.message || 'An error occurred during authentication';
             toast.error(errorMessage, { position: 'top-center' });
         } finally {
             setIsLoading(false);

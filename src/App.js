@@ -12,7 +12,8 @@ import Home from './Components/Pages/Home';
 import About from './Components/Pages/About';
 import Shop from './Components/Pages/Shop';
 import Contact from './Components/Pages/Contact';
-import ForgotPassword from './Components/Pages/FogotPassword';
+import ForgotPassword from './Components/Pages/FogotPassword'; 
+import ProductDetails from './Components/Pages/ProductDetails';
 
 function App() {
   const authCtx= useContext(AuthContext);
@@ -108,6 +109,17 @@ function App() {
                   </Suspense>
                 }
               />  
+            }
+          />
+          <Route path='/products/:productId'
+            element={
+              <ProtectedRoute
+                element={
+                  <Suspense fallback={<p>Loading...</p>}>
+                    <ProductDetails />
+                  </Suspense>
+                }
+              />
             }
           />
           <Route path='*'

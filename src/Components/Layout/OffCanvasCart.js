@@ -3,7 +3,6 @@ import CartContext from "../Store/CartContext";
 import { Button, Col, Container, Image, Offcanvas, Row } from "react-bootstrap";
 import { RiShoppingCartFill } from "react-icons/ri";
 
-
 function OffCanvasCart ({name, btn, btnSpan, ...props}) {
     const cartCtx= useContext(CartContext);
     const [showCart, setShowCart] = useState(false);

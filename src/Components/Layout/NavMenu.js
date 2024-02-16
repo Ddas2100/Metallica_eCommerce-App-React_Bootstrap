@@ -70,7 +70,7 @@ const NavMenu = () => {
                             }}
                             btnSpan={{itemsInCart}}
                         />
-                    </Suspense>
+                    </Suspense> 
                 </Navbar.Collapse>
             </Container>
         </Navbar>

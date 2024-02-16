@@ -5,13 +5,13 @@ import { addToCart, deleteFromCart, getUserCart } from './CartServices';
 import { toast } from "react-toastify";
 
 let initialCartState = {items: [], totalAmount: 0};
-const cartReducer= (state, action) => {
+const cartReducer = (state, action) => {
     if (action.type === 'GET_CART') {
         const initialTotalAmount = action.cartItems.reduce(
-          (accPrice, item) => accPrice + item.price,
-          0
+            (accPrice, item) => accPrice + item.price,
+            0
         );
-    
+
         return { items: action.cartItems, totalAmount: initialTotalAmount };
     }
     if (action.type === 'ADD_TO_CART') {
@@ -24,7 +24,8 @@ const cartReducer= (state, action) => {
             (item) => action.id === item.id
         );
         const existingCartItem = state.items[existingCartItemIndex];
-        const updatedTotalAmount = state.totalAmount + existingCartItem.price;
+
+        const updatedTotalAmount = state.totalAmount - existingCartItem.price;
         const updatedItems = state.items.filter((item) => item.id !== action.id);
         return { items: updatedItems, totalAmount: updatedTotalAmount };
     }
@@ -33,6 +34,7 @@ const cartReducer= (state, action) => {
     }
     return state;
 };
+
 
 const CartProvider = (props) => {
     const authCtx = useContext(AuthContext);
