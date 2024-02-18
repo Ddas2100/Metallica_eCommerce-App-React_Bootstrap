@@ -42,15 +42,16 @@ const CartProvider = (props) => {
     const [cartState, dispatchCartAction] = useReducer(cartReducer, initialCartState);
 
     useEffect(() => {
-        isLoggedIn && getUserCart(userEmail).then(({data}) => {
+        isLoggedIn && getUserCart(userEmail).then((data) => {
             data && dispatchCartAction({ type: 'GET_CART', cartItems: data });
         }).catch((err) => console.log(err.message));
 
         dispatchCartAction({ type: 'GET_CART', cartItems: [] });
     }, [isLoggedIn, userEmail]);
 
-    const addToCartHandler = (item) => {addToCart(authCtx.userEmail, item)
-        .then(({ data }) => {
+    const addToCartHandler = (item) => {
+        addToCart(authCtx.userEmail, item)
+        .then(( data ) => {
             dispatchCartAction({ type: 'ADD_TO_CART', item: data });
             toast.success('Item added to the cart!', { position: 'bottom-right' });
         }).catch((err) => console.log(err.message));

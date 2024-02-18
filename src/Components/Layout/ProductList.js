@@ -1,6 +1,7 @@
-import { Container, Row } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { productsArr } from "./Constants";
 import ProductModel from "./ProductModel";
+import OffCanvasCart from "./OffCanvasCart";
 
 const ProductList = () => {
     return (
@@ -12,6 +13,22 @@ const ProductList = () => {
                     ))}
                 </Row>
 
+                <Row>
+                    <Col className='d-flex justify-content-center mt-5'>
+                        <OffCanvasCart 
+                            placement={'end'}
+                            name={'Cart'}
+                            scroll={false}
+                            btn= {{
+                                variant: 'secondary',
+                                size: 'lg',
+                                text: 'See The Cart',
+                                className: 'd-flex gap-2 align-items-center',
+                            }}
+                            className='offcanvas'
+                        />
+                    </Col>
+                </Row>
             </Container>
         </>
     );

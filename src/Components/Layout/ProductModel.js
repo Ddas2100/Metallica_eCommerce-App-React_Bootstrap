@@ -4,6 +4,7 @@ import { RiShoppingCartFill, RiEyeFill } from 'react-icons/ri';
 import {toast} from 'react-toastify';
 import { Button, Card, CardBody, CardHeader, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import Rating from "./Rating";
 
 const ProductModel= ({product, index}) => {
     let classes = `d-flex justify-content-center ${
@@ -14,14 +15,13 @@ const ProductModel= ({product, index}) => {
     const addToCartHandler = (product) => {
         const { id, title, price, imageUrl } = product;
         const item = { id, title, price, imageUrl, qty: 1 };
+        console.log(item);
 
-        const existingItemIndex = cartCtx.items.findIndex(
-            (i) => i.id === product.id
-        );
+        const existingItemIndex = cartCtx.items.findIndex((i) => i.id === product.id);
 
         if (existingItemIndex !== -1)
-            return toast.warn('Item Already in the cart!', {
-                position: 'top-center',
+            return toast.warn('Item is Already in the cart!', {
+                position: 'bottom-right',
             });
 
         cartCtx.addItem(item);
@@ -37,6 +37,12 @@ const ProductModel= ({product, index}) => {
                 <CardBody className='d-flex gap-2 flex-column justify-content-between'>
                     <div className='d-flex gap-1 flex-row justify-content-between align-items-center'>
                         <p className='d-flex mb-0 fw-bold fs-5'>$ {product.price}</p>
+                        <Rating
+                            className='rating d-flex'
+                            starColor='text-dark'
+                            value={product.rating}
+                        />
+                        <p className='d-flex mb-0'>{`${product.rateCount} ratings`}</p>
                     </div>
                     <div className='d-flex gap-2 justify-content-between'>
                         <Button

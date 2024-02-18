@@ -17,7 +17,7 @@
 
 
 const baseUrl =
-  'https://crudcrud.com/api/fcbce6c10b7e4472aca5d80ec671e7b4/cart_data';
+  'https://crudcrud.com/api/3cb4f56c3e0c4836a2ac30775cb34b80/cart_data';
 
 export const getUserCart = async (userEmail) => {
   const response = await fetch(`${baseUrl}${userEmail}`);

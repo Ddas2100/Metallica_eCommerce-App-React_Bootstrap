@@ -1,14 +1,16 @@
+import { Suspense, lazy, useContext } from 'react';
 import '../../../src/index.css';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from 'react-router-dom';
-import OffCanvasCart from './OffCanvasCart';
 import CartContext from '../Store/CartContext';
 import { toast } from 'react-toastify';
-import { Suspense, useContext } from 'react';
 import AuthContext from '../Store/AuthContext';
 import { Button } from 'react-bootstrap';
+// import OffCanvasCart from './OffCanvasCart';
+const OffCanvasCart = lazy (() => import('./OffCanvasCart'));
+
 
 const NavMenu = () => {
 
